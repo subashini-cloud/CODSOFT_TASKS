@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>To-Do List Application</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="logo">
+            <span>✓</span>
+            TaskFlow
+        </div>
+
+        <div class="header-right">
+            <button id="themeBtn" class="theme-btn">
+                🌙
+            </button>
+        </div>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <!-- INTRO -->
+        <section class="intro">
+
+            <div>
+                <p class="small-title">TASK MANAGEMENT</p>
+
+                <h1>
+                    Organize your
+                    <span>day better.</span>
+                </h1>
+
+                <p class="intro-text">
+                    Manage your daily tasks, track your progress,
+                    and stay productive.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- STATISTICS -->
+        <section class="stats">
+
+            <div class="stat">
+                <span class="stat-number" id="totalTasks">0</span>
+                <span class="stat-label">Total Tasks</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-number completed-number" id="completedTasks">0</span>
+                <span class="stat-label">Completed</span>
+            </div>
+
+            <div class="stat">
+                <span class="stat-number pending-number" id="pendingTasks">0</span>
+                <span class="stat-label">Pending</span>
+            </div>
+
+        </section>
+
+
+        <!-- ADD TASK -->
+        <section class="task-form-section">
+
+            <h2>Add New Task</h2>
+
+            <form id="taskForm">
+
+                <div class="form-row">
+
+                    <div class="input-group title-group">
+                        <label for="taskTitle">Task</label>
+
+                        <input
+                            type="text"
+                            id="taskTitle"
+                            placeholder="Enter your task..."
+                            maxlength="100"
+                        >
+
+                        <small id="titleError"></small>
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="category">Category</label>
+
+                        <select id="category">
+
+                            <option value="Personal">
+                                Personal
+                            </option>
+
+                            <option value="Work">
+                                Work
+                            </option>
+
+                            <option value="Study">
+                                Study
+                            </option>
+
+                            <option value="Shopping">
+                                Shopping
+                            </option>
+
+                            <option value="Other">
+                                Other
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="priority">Priority</label>
+
+                        <select id="priority">
+
+                            <option value="Low">
+                                Low
+                            </option>
+
+                            <option value="Medium" selected>
+                                Medium
+                            </option>
+
+                            <option value="High">
+                                High
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="input-group">
+
+                        <label for="dueDate">Due Date</label>
+
+                        <input
+                            type="date"
+                            id="dueDate"
+                        >
+
+                    </div>
+
+                    <button type="submit" class="add-btn">
+                        + Add Task
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- TOOLBAR -->
+        <section class="toolbar">
+
+            <div class="search-box">
+
+                <span>⌕</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search tasks..."
+                >
+
+            </div>
+
+
+            <div class="filters">
+
+                <button
+                    class="filter-btn active"
+                    data-filter="all">
+                    All
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="pending">
+                    Pending
+                </button>
+
+                <button
+                    class="filter-btn"
+                    data-filter="completed">
+                    Completed
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- TASK LIST -->
+        <section class="tasks-section">
+
+            <div class="section-heading">
+
+                <h2>Your Tasks</h2>
+
+                <span id="taskCount">
+                    0 tasks
+                </span>
+
+            </div>
+
+
+            <div id="taskList" class="task-list">
+
+                <!-- Tasks will appear here -->
+
+            </div>
+
+
+            <!-- EMPTY MESSAGE -->
+            <div id="emptyMessage" class="empty-message">
+
+                <div class="empty-icon">
+                    ✓
+                </div>
+
+                <h3>No tasks found</h3>
+
+                <p>
+                    Add a new task to get started.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- EDIT MODAL -->
+    <div id="editModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+
+                <h2>Edit Task</h2>
+
+                <button
+                    id="closeModal"
+                    class="close-btn">
+                    ×
+                </button>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label for="editTitle">
+                    Task
+                </label>
+
+                <input
+                    type="text"
+                    id="editTitle"
+                >
+
+            </div>
+
+
+            <div class="edit-grid">
+
+                <div class="input-group">
+
+                    <label for="editCategory">
+                        Category
+                    </label>
+
+                    <select id="editCategory">
+
+                        <option value="Personal">
+                            Personal
+                        </option>
+
+                        <option value="Work">
+                            Work
+                        </option>
+
+                        <option value="Study">
+                            Study
+                        </option>
+
+                        <option value="Shopping">
+                            Shopping
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="editPriority">
+                        Priority
+                    </label>
+
+                    <select id="editPriority">
+
+                        <option value="Low">
+                            Low
+                        </option>
+
+                        <option value="Medium">
+                            Medium
+                        </option>
+
+                        <option value="High">
+                            High
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="editDate">
+                        Due Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="editDate"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="saveEdit"
+                class="save-btn">
+                Save Changes
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
